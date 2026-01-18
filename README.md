@@ -48,7 +48,6 @@ node mongodb.js
 
 The server will be available at ```http://localhost:3000```.
 
-📡 API Endpoints
 ## 📡 API Endpoints
 
 | Method | Endpoint | Description |
@@ -59,7 +58,7 @@ The server will be available at ```http://localhost:3000```.
 | **PUT** | `/developers/:id` | Update an existing developer by ID. |
 | **DELETE** | `/developers/:id` | Remove a developer from the DB. |
 
-🧪 Testing with Postman
+## 🧪 Testing with Postman
 All routes have been manually tested using Postman:
 - `POST`: Validates required fields and returns ```201 Created```.
 - `GET`: Returns documents as JSON with a ```200 OK``` status.
