@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Developers Manager</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .dev-item { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        form { margin-bottom: 20px; background: #f4f4f4; padding: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Game Developers List</h1>
+
+    <form id="devForm">
+        <h3>Add New Developer</h3>
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="text" id="country" placeholder="Country" required>
+        <input type="number" id="foundedYear" placeholder="Founded Year" required>
+        <button type="submit">Add Developer</button>
+    </form>
+
+    <div id="devList"></div>
+
+    <script>
+        // Загрузка списка
+        async function loadDevs() {
+            const res = await fetch('/developers');
+            const data = await res.json();
+            const list = document.getElementById('devList');
+            list.innerHTML = data.map(dev => `
+                <div class="dev-item">
+                    <strong>${dev.name}</strong> (${dev.country}) - Since ${dev.foundedYear}
+                    <br><small>ID: ${dev._id}</small>
+                </div>
+            `).join('');
+        }
+
+        // Отправка формы
+        document.getElementById('devForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById('name').value,
+                country: document.getElementById('country').value,
+                foundedYear: document.getElementById('foundedYear').value
+            };
+            await fetch('/developers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            loadDevs();
+            e.target.reset();
+        };
+
+        loadDevs();
+    </script>
+</body>
+</html>
