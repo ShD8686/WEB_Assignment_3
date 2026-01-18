@@ -49,15 +49,18 @@ node mongodb.js
 The server will be available at ```http://localhost:3000```.
 
 📡 API Endpoints
-Method	Endpoint	Description
-GET	/developers	Retrieve all developers from DB.
-GET	/developers/:id	Retrieve a single developer by ID.
-POST	/developers	Create a new developer entry.
-PUT	/developers/:id	Update an existing developer by ID.
-DELETE	/developers/:id	Remove a developer from the DB.
+## 📡 API Endpoints
+
+| Method | Endpoint | Description |
+|:--- |:--- |:--- |
+| **GET** | `/developers` | Retrieve all developers from DB. |
+| **GET** | `/developers/:id` | Retrieve a single developer by ID. |
+| **POST** | `/developers` | Create a new developer entry. |
+| **PUT** | `/developers/:id` | Update an existing developer by ID. |
+| **DELETE** | `/developers/:id` | Remove a developer from the DB. |
 
 🧪 Testing with Postman
 All routes have been manually tested using Postman:
-`POST`: Validates required fields and returns ```201 Created```.
-`GET`: Returns documents as JSON with a ```200 OK``` status.
-`Error Handling`: Invalid IDs return ```400 Bad Request```, and missing documents return ```404 Not Found```.
+- `POST`: Validates required fields and returns ```201 Created```.
+- `GET`: Returns documents as JSON with a ```200 OK``` status.
+- `Error Handling`: Invalid IDs return ```400 Bad Request```, and missing documents return ```404 Not Found```.
