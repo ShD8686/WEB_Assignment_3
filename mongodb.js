@@ -5,9 +5,8 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-app.use(express.static('public')); // Для фронтенда
+app.use(express.static('public'));
 
-// 1. Подключение к базе данных
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -18,20 +17,15 @@ const connectDB = async () => {
   }
 };
 
-// 2. Схема объекта (Developer)
-// Требование: Название + 2 доп. поля + Timestamps
 const developerSchema = new mongoose.Schema({
-    name: { type: String, required: true },       // Название компании
-    country: { type: String, required: true },    // Доп. поле 1: Страна
-    foundedYear: { type: Number, required: true },// Доп. поле 2: Год основания
-    games: [String]                               // Список игр
-}, { timestamps: true }); // Автоматически добавляет createdAt и updatedAt
+    name: { type: String, required: true },
+    country: { type: String, required: true },
+    foundedYear: { type: Number, required: true },
+    games: [String]
+}, { timestamps: true });
 
 const Developer = mongoose.model('Developer', developerSchema);
 
-// 3. API Эндпоинты
-
-// GET /developers - Получить всех
 app.get('/developers', async (req, res) => {
     try {
         const developers = await Developer.find();
@@ -41,7 +35,6 @@ app.get('/developers', async (req, res) => {
     }
 });
 
-// GET /developers/:id - Получить одного по ID
 app.get('/developers/:id', async (req, res) => {
     try {
         const developer = await Developer.findById(req.params.id);
@@ -52,12 +45,10 @@ app.get('/developers/:id', async (req, res) => {
     }
 });
 
-// POST /developers - Создать нового
 app.post('/developers', async (req, res) => {
     try {
         const { name, country, foundedYear, games } = req.body;
         
-        // Валидация обязательных полей
         if (!name || !country || !foundedYear) {
             return res.status(400).json({ error: "Name, Country and Founded Year are required" });
         }
@@ -70,7 +61,6 @@ app.post('/developers', async (req, res) => {
     }
 });
 
-// PUT /developers/:id - Обновить
 app.put('/developers/:id', async (req, res) => {
     try {
         const updatedDev = await Developer.findByIdAndUpdate(
@@ -85,7 +75,6 @@ app.put('/developers/:id', async (req, res) => {
     }
 });
 
-// DELETE /developers/:id - Удалить
 app.delete('/developers/:id', async (req, res) => {
     try {
         const deletedDev = await Developer.findByIdAndDelete(req.params.id);
@@ -100,4 +89,5 @@ connectDB().then(() => {
     app.listen(3000, () => {
         console.log(`Server running at http://localhost:3000`);
     });
+
 });
